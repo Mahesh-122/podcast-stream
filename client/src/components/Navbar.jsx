@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-// import { Link } from 'react-router-dom';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { Avatar } from '@mui/material';
+import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { Avatar } from '@mui/material'
 import PersonIcon from '@mui/icons-material/Person'
 import MenuIcon from '@mui/icons-material/Menu'
 import { IconButton } from '@mui/material'
-// import { openSignin } from '../redux/setSigninSlice';
+import { openSignin } from '../redux/setSigninSlice'
 
 const NavbarDiv = styled.div`
   display: flex;
@@ -49,46 +49,45 @@ const ButtonDiv = styled.div`
 `
 
 const Welcome = styled.div`
-  font-size: 26px;
-  font-weight: 600;
-  @media (max-width: 768px) {
-    font-size: 16px;
-  }
-`;
+    font-size: 26px;
+    font-weight: 600;
+    @media (max-width: 768px) {
+        font-size: 16px;
+    }
+`
 
 const IcoButton = styled(IconButton)`
     color: ${({ theme }) => theme.text_secondary} !important;
 `
 
 const Navbar = ({ menuOpen, setMenuOpen, setSignInOpen, setSignUpOpen }) => {
-    // const { currentUser } = useSelector(state => state.user);
-    // const dispatch = useDispatch();
+    const { currentUser } = useSelector((state) => state.user)
+    const dispatch = useDispatch()
 
     return (
         <NavbarDiv>
             <IcoButton onClick={() => setMenuOpen(!menuOpen)}>
                 <MenuIcon />
             </IcoButton>
-            {/* {currentUser ?
-        <Welcome>
-          Welcome, {currentUser.name}
-        </Welcome>
-        :
-        <>&nbsp;</>} */}
-            {/* {
-        currentUser ? <>
-          <Link to='/profile' style={{ textDecoration: 'none' }}>
-            <Avatar src={currentUser.img} >{currentUser.name.charAt(0).toUpperCase()}</Avatar>
-          </Link>
-        </>
-          : */}
-            <ButtonDiv
-            // onClick={() => dispatch(openSignin())}
-            >
-                <PersonIcon style={{ fontSize: '18px' }} />
-                Login
-            </ButtonDiv>
-            {/* } */}
+            {currentUser ? (
+                <Welcome>Welcome, {currentUser.name}</Welcome>
+            ) : (
+                <>&nbsp;</>
+            )}
+            {currentUser ? (
+                <>
+                    <Link to="/profile" style={{ textDecoration: 'none' }}>
+                        <Avatar src={currentUser.img}>
+                            {currentUser.name.charAt(0).toUpperCase()}
+                        </Avatar>
+                    </Link>
+                </>
+            ) : (
+                <ButtonDiv onClick={() => dispatch(openSignin())}>
+                    <PersonIcon style={{ fontSize: '18px' }} />
+                    Login
+                </ButtonDiv>
+            )}
         </NavbarDiv>
     )
 }

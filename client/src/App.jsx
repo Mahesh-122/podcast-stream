@@ -12,6 +12,8 @@ import { darkTheme, lightTheme } from './utils/Themes'
 import { closeSignin } from './redux/setSigninSlice.jsx'
 import Dashboard from './pages/Dashboard'
 import Search from './pages/Search'
+import PodcastDetails from "./pages/PodcastDetails.jsx";
+import DisplayPodcasts from './pages/DisplayPodcasts.jsx';
 import Favourites from './pages/Favourites'
 import Profile from './pages/Profile'
 
@@ -25,7 +27,6 @@ const Casting = styled.div`
     display: flex;
     flex-direction: row;
     width: 100%;
-
     height: 100vh;
     background: ${({ theme }) => theme.bgLight};
     overflow-y: hidden;
@@ -105,6 +106,8 @@ function App() {
                                     element={<Favourites />}
                                 />
                                 <Route path="/profile" element={<Profile />} />
+                                <Route path='/podcast/:id' exact element={<PodcastDetails />} />
+                                <Route path='/showpodcasts/:type' exact element={<DisplayPodcasts/>} />
                             </Routes>
                         </Frame>
                         {/* {open && <ToastMessage open={open} message={message} severity={severity} />} */}

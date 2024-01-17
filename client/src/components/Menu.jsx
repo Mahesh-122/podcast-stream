@@ -1,8 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useDispatch } from "react-redux";
-// import { useNavigate } from 'react-router-dom';
-// import { logout } from "../redux/userSlice";
+import { useNavigate } from 'react-router-dom';
+import { logout } from "../redux/userSlice";
 import { Link } from 'react-router-dom'
 // import { useSelector } from 'react-redux';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
@@ -88,12 +88,12 @@ const Image = styled.img`
 const Menu = ({ setMenuOpen, darkMode, setDarkMode, setUploadOpen }) => {
 
     const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     // const { currentUser } = useSelector(state => state.user);
-    // const logoutUser = () => {
-    //     dispatch(logout());
-    //     navigate(`/`);
-    // };
+    const logoutUser = () => {
+        dispatch(logout());
+        navigate(`/`);
+    };
 
     return (
         <MenuContainer setMenuOpen={setMenuOpen}>

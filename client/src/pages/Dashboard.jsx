@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-// import { getMostPopularPodcast } from '../api/index';
-// import { getPodcastByCategory } from '../api';
-// import { PodcastCard } from '../components/PodcastCard.jsx'
-// import { getUsers } from '../api/index';
+import { getMostPopularPodcast } from '../api/index';
+import { getPodcastByCategory } from '../api';
+import { PodcastCard } from '../components/PodcastCard.jsx'
+import { getUsers } from '../api/index';
 import { Link } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 
@@ -93,116 +93,116 @@ const Dashboard = ({ setSignInOpen }) => {
   const [loading, setLoading] = useState(false);
 
   //user
-  // const { currentUser } = useSelector(state => state.user);
+  const { currentUser } = useSelector(state => state.user);
 
-  // const token = localStorage.getItem("podstreamtoken");
-  // const getUser = async () => {
-  //   await getUsers(token).then((res) => {
-  //     setUser(res.data)
-  //   }).then((error) => {
-  //     console.log(error)
-  //   });
-  // }
+  const token = localStorage.getItem("podstreamtoken");
+  const getUser = async () => {
+    await getUsers(token).then((res) => {
+      setUser(res.data)
+    }).then((error) => {
+      console.log(error)
+    });
+  }
 
-  // const getPopularPodcast = async () => {
-  //   await getMostPopularPodcast()
-  //     .then((res) => {
-  //       setMostPopular(res.data)
-  //       console.log(res.data)
-  //     })
-  //     .catch((error) => {
-  //       console.log(error)
-  //     });
-  // }
+  const getPopularPodcast = async () => {
+    await getMostPopularPodcast()
+      .then((res) => {
+        setMostPopular(res.data)
+        console.log(res.data)
+      })
+      .catch((error) => {
+        console.log(error)
+      });
+  }
 
-  // const getCommedyPodcasts = async () => {
-  //   getPodcastByCategory("comedy")
-  //     .then((res) => {
-  //       setComedy(res.data)
-  //       console.log(res.data)
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
+  const getCommedyPodcasts = async () => {
+    getPodcastByCategory("comedy")
+      .then((res) => {
+        setComedy(res.data)
+        console.log(res.data)
+      })
+      .catch((error) => console.log(error));
+  }
 
-  // const getNewsPodcasts = async () => {
-  //   getPodcastByCategory("news")
-  //     .then((res) => {
-  //       setNews(res.data)
-  //       console.log(res.data)
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
+  const getNewsPodcasts = async () => {
+    getPodcastByCategory("news")
+      .then((res) => {
+        setNews(res.data)
+        console.log(res.data)
+      })
+      .catch((error) => console.log(error));
+  }
 
-  // const getSportsPodcasts = async () => {
-  //   getPodcastByCategory("sports")
-  //     .then((res) => {
-  //       setsports(res.data)
-  //       console.log(res.data)
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
+  const getSportsPodcasts = async () => {
+    getPodcastByCategory("sports")
+      .then((res) => {
+        setsports(res.data)
+        console.log(res.data)
+      })
+      .catch((error) => console.log(error));
+  }
 
-  // const getCrimePodcasts = async () => {
-  //   getPodcastByCategory("crime")
-  //     .then((res) => {
-  //       setCrime(res.data)
-  //       console.log(res.data)
-  //     })
-  //     .catch((error) => console.log(error));
-  // }
+  const getCrimePodcasts = async () => {
+    getPodcastByCategory("crime")
+      .then((res) => {
+        setCrime(res.data)
+        console.log(res.data)
+      })
+      .catch((error) => console.log(error));
+  }
 
-  // const getallData = async () => {
-  //   setLoading(true);
-  //   if (currentUser) {
-  //     setLoading(true);
-  //     await getUser();
-  //   }
-  //   await getPopularPodcast();
-  //   await getCommedyPodcasts();
-  //   await getNewsPodcasts();
-  //   await getCommedyPodcasts();
-  //   await getCrimePodcasts();
-  //   await getSportsPodcasts();
-  //   setLoading(false);
-  // }
+  const getallData = async () => {
+    setLoading(true);
+    if (currentUser) {
+      setLoading(true);
+      await getUser();
+    }
+    await getPopularPodcast();
+    await getCommedyPodcasts();
+    await getNewsPodcasts();
+    await getCommedyPodcasts();
+    await getCrimePodcasts();
+    await getSportsPodcasts();
+    setLoading(false);
+  }
 
-  // useEffect(() => {
-  //   getallData();
-  // }, [currentUser])
+  useEffect(() => {
+    getallData();
+  }, [currentUser])
 
   return (
     <DashboardMain>
-      {/* {loading ?
+      {loading ?
         <Loader>
           <CircularProgress />
         </Loader>
-        : */}
+        :
         <>
-          {/* {currentUser && user?.podcasts?.length > 0 && */}
+           {currentUser && user?.podcasts?.length > 0 && 
             <FilterContainer box={true}>
               <Topic>Your Uploads
                 <Link to={`/profile`} style={{ textDecoration: "none" }}>
                   <Span>Show All</Span>
                 </Link>
               </Topic>
-              {/* <Podcasts>
+               <Podcasts>
                 {user?.podcasts.slice(0, 10).map((podcast) => (
                   <PodcastCard podcast={podcast} user={user} setSignInOpen={setSignInOpen} />
                 ))}
-              </Podcasts> */}
+              </Podcasts> 
             </FilterContainer>
-          {/* } */}
+           } 
           <FilterContainer>
             <Topic>Most Popular
               <Link to={`/showpodcasts/mostpopular`} style={{ textDecoration: "none" }}>
                 <Span>Show All</Span>
               </Link>
             </Topic>
-            {/* <Podcasts>
+            <Podcasts>
               {mostPopular.slice(0, 10).map((podcast) => (
                 <PodcastCard podcast={podcast} user={user} setSignInOpen={setSignInOpen} />
               ))}
-            </Podcasts> */}
+            </Podcasts>
           </FilterContainer>
           <FilterContainer>
             <Topic>Comedy
@@ -210,11 +210,11 @@ const Dashboard = ({ setSignInOpen }) => {
                 <Span>Show All</Span>
               </Link>
             </Topic>
-            {/* <Podcasts>
+            <Podcasts>
               {comedy.slice(0, 10).map((podcast) => (
                 <PodcastCard podcast={podcast} user={user} setSignInOpen={setSignInOpen} />
               ))}
-            </Podcasts> */}
+            </Podcasts>
           </FilterContainer>
           <FilterContainer>
             <Link to={`/showpodcasts/news`} style={{ textDecoration: "none" }}>
@@ -222,11 +222,11 @@ const Dashboard = ({ setSignInOpen }) => {
                 <Span>Show All</Span>
               </Topic>
             </Link>
-            {/* <Podcasts>
+            <Podcasts>
               {news.slice(0, 10).map((podcast) => (
                 <PodcastCard podcast={podcast} user={user} setSignInOpen={setSignInOpen} />
               ))}
-            </Podcasts> */}
+            </Podcasts>
           </FilterContainer>
           <FilterContainer>
             <Link to={`/showpodcasts/crime`} style={{ textDecoration: "none" }}>
@@ -234,11 +234,11 @@ const Dashboard = ({ setSignInOpen }) => {
                 <Span>Show All</Span>
               </Topic>
             </Link>
-            {/* <Podcasts>
+            <Podcasts>
               {crime.slice(0, 10).map((podcast) => (
                 <PodcastCard podcast={podcast} user={user} setSignInOpen={setSignInOpen} />
               ))}
-            </Podcasts> */}
+            </Podcasts>
           </FilterContainer>
           <FilterContainer>
             <Link to={`/showpodcasts/sports`} style={{ textDecoration: "none" }}>
@@ -246,14 +246,14 @@ const Dashboard = ({ setSignInOpen }) => {
                 <Span>Show All</Span>
               </Topic>
             </Link>
-            {/* <Podcasts>
+            <Podcasts>
               {sports.slice(0, 10).map((podcast) => (
                 <PodcastCard podcast={podcast} user={user} setSignInOpen={setSignInOpen} />
               ))}
-            </Podcasts> */}
+            </Podcasts>
           </FilterContainer>
         </>
-      {/* } */}
+       } 
     </DashboardMain>
   )
 }

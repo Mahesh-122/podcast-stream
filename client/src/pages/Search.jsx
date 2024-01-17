@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-// import { DefaultCard } from '../components/DefaultCard.jsx';
-// import { Category } from '../utils/Data.js';
-// import { searchPodcast } from '../api/index.js';
-// import { PodcastCard } from '../components/PodcastCard.jsx';
-// import TopResult from '../components/TopResult.jsx';
-// import MoreResult from '../components/MoreResult.jsx';
+import { DefaultCard } from '../components/DefaultCard.jsx';
+import { Category } from '../utils/Data.jsx';
+import { searchPodcast } from '../api/index.jsx';
+import { PodcastCard } from '../components/PodcastCard.jsx';
+import TopResult from '../components/TopResult.jsx';
+import MoreResult from '../components/MoreResult.jsx';
 import { Link } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
-// import { openSnackbar } from '../redux/snackbarSlice.jsx';
+import { useDispatch } from 'react-redux';
+import { openSnackbar } from '../redux/snackbarSlice.jsx';
 import { CircularProgress } from '@mui/material';
 
 const SearchMain = styled.div`
@@ -102,26 +102,26 @@ const Search = () => {
     const [searched, setSearched] = useState("");
     const [searchedPodcasts, setSearchedPodcasts] = useState([]);
     const [loading, setLoading] = useState(false);
-    // const dispatch = useDispatch();
-    // const handleChange = async (e) => {
-    //     setSearchedPodcasts([]);
-    //     setLoading(true);
-    //     setSearched(e.target.value);
-    //     await searchPodcast(e.target.value)
-    //         .then((res) => {
-    //             setSearchedPodcasts(res.data);
-    //             console.log(res.data);
-    //         })
-    //         .catch((err) => {
-    //             dispatch(
-    //                 openSnackbar({
-    //                     message: err.message,
-    //                     severity: "error",
-    //                 })
-    //             );
-    //         });
-    //     setLoading(false);
-    // }
+    const dispatch = useDispatch();
+    const handleChange = async (e) => {
+        setSearchedPodcasts([]);
+        setLoading(true);
+        setSearched(e.target.value);
+        await searchPodcast(e.target.value)
+            .then((res) => {
+                setSearchedPodcasts(res.data);
+                console.log(res.data);
+            })
+            .catch((err) => {
+                dispatch(
+                    openSnackbar({
+                        message: err.message,
+                        severity: "error",
+                    })
+                );
+            });
+        setLoading(false);
+    }
 
     return (
         <SearchMain>
@@ -130,13 +130,13 @@ const Search = () => {
                 <SearchOutlinedIcon sx={{ "color": "inherit" }} />
                 <input type='text' placeholder='Search Artist/Podcast'
                     style={{ "border": "none", "outline": "none", "width": "100%", "background": "inherit", "color": "inherit" }}
-                    // value={searched}
-                    // onChange={(e) => handleChange(e)} 
+                    value={searched}
+                    onChange={(e) => handleChange(e)} 
                     />
             </Search_whole>
 
             </div>
-            {/* {searched === "" ?
+             {searched === "" ?
                 <Categories>
                     <Heading>Browse All</Heading>
                     <BrowseAll>
@@ -170,7 +170,7 @@ const Search = () => {
                         </SearchedCards>
                     }
                 </>
-            } */}
+            } 
         </SearchMain>
     )
 }

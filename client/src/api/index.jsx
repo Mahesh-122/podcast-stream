@@ -1,7 +1,7 @@
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-//https://podstream.onrender.com/api
-const API = axios.create({ baseURL: `https://podstream.onrender.com/api` }); 
+//https://podstreaming.onrender.com/api
+const API = axios.create({ baseURL: `https://podstreaming.onrender.com/api` }); 
 
 //auth
 export const signIn = async ({ email, password }) => await API.post('/auth/signin', { email, password });
@@ -35,15 +35,15 @@ export const getUsers = async (token) => await API.get('/user', { headers: { "Au
 export const searchUsers = async (search,token) => await API.get(`users/search/${search}`,{ headers: { "Authorization" : `Bearer ${token}` }},{ withCredentials: true });
 
 
-//casting api
-export const createCasting = async (casting,token) => await API.post('/castings', casting, { headers: { "Authorization" : `Bearer ${token}` } },{ withCredentials: true });
-export const getcastings = async () => await API.get('/castings');
-export const addEpisodes = async (casting,token) => await API.post('/castings/episode', casting, { headers: { "Authorization" : `Bearer ${token}` } },{ withCredentials: true });
-export const favoriteCasting = async (id,token) => await API.post(`/castings/favorit`,{id: id}, { headers: { "Authorization" : `Bearer ${token}` } },{ withCredentials: true });
-export const getRandomCasting = async () => await API.get('/castings/random');
-export const getcastingByTags = async (tags) => await API.get(`/castings/tags?tags=${tags}`);
-export const getcastingByCategory = async (category) => await API.get(`/castings/category?q=${category}`);
-export const getMostPopularCasting = async () => await API.get('/castings/mostpopular');
-export const getcastingById = async (id) => await API.get(`/castings/get/${id}`);
-export const addView = async (id) => await API.post(`/castings/addview/${id}`);
-export const searchCasting = async (search) => await API.get(`/castings/search?q=${search}`);
+//podcast api
+export const createPodcast = async (podcast,token) => await API.post('/podcasts', podcast, { headers: { "Authorization" : `Bearer ${token}` } },{ withCredentials: true });
+export const getPodcasts = async () => await API.get('/podcasts');
+export const addEpisodes = async (podcast,token) => await API.post('/podcasts/episode', podcast, { headers: { "Authorization" : `Bearer ${token}` } },{ withCredentials: true });
+export const favoritePodcast = async (id,token) => await API.post(`/podcasts/favorit`,{id: id}, { headers: { "Authorization" : `Bearer ${token}` } },{ withCredentials: true });
+export const getRandomPodcast = async () => await API.get('/podcasts/random');
+export const getPodcastByTags = async (tags) => await API.get(`/podcasts/tags?tags=${tags}`);
+export const getPodcastByCategory = async (category) => await API.get(`/podcasts/category?q=${category}`);
+export const getMostPopularPodcast = async () => await API.get('/podcasts/mostpopular');
+export const getPodcastById = async (id) => await API.get(`/podcasts/get/${id}`);
+export const addView = async (id) => await API.post(`/podcasts/addview/${id}`);
+export const searchPodcast = async (search) => await API.get(`/podcasts/search?q=${search}`);

@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import React, { useState, useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// import { PodcastCard } from '../components/PodcastCard';
-// import { getUsers } from '../api/index';
-// import { CircularProgress } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { PodcastCard } from '../components/PodcastCard';
+import { getUsers } from '../api/index';
+import { CircularProgress } from '@mui/material';
 
 const Container = styled.div`
 padding: 20px 30px;
@@ -52,40 +52,40 @@ color: ${({ theme }) => theme.text_primary};
 
 
 const Favourites = () => {
-  // const [user, setUser] = useState();
-  // const [Loading, setLoading] = useState(false);
+  const [user, setUser] = useState();
+  const [Loading, setLoading] = useState(false);
   // const dispatch = useDispatch();
-  // //user
-  // const { currentUser } = useSelector(state => state.user);
+  //user
+  const { currentUser } = useSelector(state => state.user);
 
-  // const token = localStorage.getItem("podstreamtoken");
-  // const getUser = async () => {
-  //   await getUsers(token).then((res) => {
-  //     setUser(res.data)
-  //   }).then((error) => {
-  //     console.log(error)
-  //   });
-  // }
+  const token = localStorage.getItem("podstreamtoken");
+  const getUser = async () => {
+    await getUsers(token).then((res) => {
+      setUser(res.data)
+    }).then((error) => {
+      console.log(error)
+    });
+  }
 
-  // const getuser = async () => {
+  const getuser = async () => {
 
-  //   if (currentUser) {
-  //     setLoading(true);
-  //     await getUser();
-  //     setLoading(false);
-  //   }
-  // }
+    if (currentUser) {
+      setLoading(true);
+      await getUser();
+      setLoading(false);
+    }
+  }
 
-  // useEffect(() => {
-  //   getuser();
-  // }, [currentUser]);
+  useEffect(() => {
+    getuser();
+  }, [currentUser]);
 
   return (
     <Container>
       <Topic>
         Favourites
       </Topic>
-      {/* {Loading ?
+      {Loading ?
         <Loader>
           <CircularProgress />
         </Loader>
@@ -96,7 +96,7 @@ const Favourites = () => {
             <PodcastCard podcast={podcast} user={user} />
           ))}
         </FavouritesContainer>
-      } */}
+      }
     </Container>
   )
 }

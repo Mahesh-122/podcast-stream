@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from "styled-components";
 import Avatar from '@mui/material/Avatar';
-// import { getUsers } from '../api/index';
-// import { PodcastCard } from '../components/PodcastCard.jsx'
+import { getUsers } from '../api/index';
+import { PodcastCard } from '../components/PodcastCard.jsx'
 
 const ProfileAvatar = styled.div`
   padding-left:3rem;
@@ -114,26 +114,26 @@ font-size: 14px;
 
 const Profile = () => {
 
-    // const [user, setUser] = useState();
-    // const { currentUser } = useSelector(state => state.user);
-    // const [name, setName] = useState("");
+    const [user, setUser] = useState();
+    const { currentUser } = useSelector(state => state.user);
+    const [name, setName] = useState("");
 
-    // const token = localStorage.getItem("podstreamtoken");
-    // const getUser = async () => {
-    //     await getUsers(token).then((res) => {
-    //         setUser(res.data)
-    //         setName(res.data.name);
-    //     }).catch((error) => {
-    //         console.log(error)
-    //     });
-    // }
+    const token = localStorage.getItem("podstreamtoken");
+    const getUser = async () => {
+        await getUsers(token).then((res) => {
+            setUser(res.data)
+            setName(res.data.name);
+        }).catch((error) => {
+            console.log(error)
+        });
+    }
 
-    // useEffect(() => {
-    //     if (currentUser) {
-    //         getUser();
-    //         // setName(user?.name.split("")[0].toUpperCase());
-    //     }
-    // }, [currentUser])
+    useEffect(() => {
+        if (currentUser) {
+            getUser();
+            setName(user?.name.split("")[0].toUpperCase());
+        }
+    }, [currentUser])
 
 
     return (
@@ -141,35 +141,34 @@ const Profile = () => {
             <UserDetails>
                 <ProfileAvatar>
                     <Avatar sx={{ height: 165, width: 165 , fontSize: '24px'}}
-                    //  src={user?.img}
-                     >dcc
-                      {/* {user?.name.charAt(0).toUpperCase()} */}
+                     src={user?.img}>
+                      {user?.name.charAt(0).toUpperCase()}
                       </Avatar>
                 </ProfileAvatar>
 
                 <ProfileContainer>
-                    <ProfileName>dwd
-                      {/* {name} */}
+                    <ProfileName>
+                      {name}
                       </ProfileName>
                     <Profile_email>Email: 
-                      {/* {user?.email} */}
+                      {user?.email}
                       </Profile_email>
                 </ProfileContainer>
             </UserDetails>
-            {/* {currentUser && user?.podcasts.length > 0 && */}
+            {currentUser && user?.podcasts.length > 0 &&
                 <FilterContainer box={true}>
                     <Topic>Your Uploads
                     </Topic>
                     <Podcasts>
-                        {/* {user?.podcasts.map((podcast) => (
+                        {user?.podcasts.map((podcast) => (
                             <PodcastCard podcast={podcast} user={user} />
-                        ))} */}
+                        ))}
                         csc
                     </Podcasts>
                 </FilterContainer>
 
-            {/* } */}
-            {/* {currentUser && user?.podcasts.length === 0 && */}
+            } 
+            {currentUser && user?.podcasts.length === 0 &&
                 <FilterContainer box={true} >
                     <Topic>Your Uploads
                     </Topic>
@@ -177,15 +176,15 @@ const Profile = () => {
                         <ButtonContainer>Upload</ButtonContainer>
                     </Container>
                 </FilterContainer>
-            {/* } */}
+             } 
             <FilterContainer box={true}>
                 <Topic>Your Favourites
                 </Topic>
                 <Podcasts>
-                    {/* {user && user?.favorits.map((podcast) => (
+                    {user && user?.favorits.map((podcast) => (
                         <PodcastCard podcast={podcast} user={user} />
-                    ))} */}
-                    cssc
+                    ))}
+                  
                 </Podcasts>
             </FilterContainer>
         </ProfileMain>
