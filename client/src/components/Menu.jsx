@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import { logout } from "../redux/userSlice";
 import { Link } from 'react-router-dom'
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import FavoriteRoundedIcon from '@mui/icons-material/FavoriteRounded';
@@ -89,7 +89,7 @@ const Menu = ({ setMenuOpen, darkMode, setDarkMode, setUploadOpen }) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    // const { currentUser } = useSelector(state => state.user);
+    const { currentUser } = useSelector(state => state.user);
     const logoutUser = () => {
         dispatch(logout());
         navigate(`/`);
@@ -101,7 +101,7 @@ const Menu = ({ setMenuOpen, darkMode, setDarkMode, setUploadOpen }) => {
                 <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
                     <Logo>
                         <Image src={LogoIcon} />
-                        CASTING
+                        PODSTREAM
                     </Logo>
                 </Link>
                 <Close>
@@ -120,14 +120,14 @@ const Menu = ({ setMenuOpen, darkMode, setDarkMode, setUploadOpen }) => {
                     <NavText>Search</NavText>
                 </Elements>
             </Link>
-            <Link to='/favourites' style={{ textDecoration: "none", color: "inherit", width: '100%' }}>
-                <Elements>
-                    <FavoriteRoundedIcon />
-                    <NavText>Favourites</NavText>
-                </Elements>
-             </Link >
-            {/* {
+            {
                 currentUser ?
+                    <Link to='/favourites' style={{ textDecoration: "none", color: "inherit", width: '100%' }}>
+                        <Elements>
+                            <FavoriteRoundedIcon />
+                            <NavText>Favourites</NavText>
+                        </Elements>
+                    </Link >
                     :
                     <Link onClick={() =>
                         dispatch(
@@ -138,11 +138,10 @@ const Menu = ({ setMenuOpen, darkMode, setDarkMode, setUploadOpen }) => {
                             <FavoriteRoundedIcon />
                             <NavText>Favourites</NavText>
                         </Elements>
-                   </Link >
-            } */}
+                    </Link >
+            }
             <HR />
-            <Link 
-            onClick={() => {
+            <Link onClick={() => {
                 if (currentUser) {
                     setUploadOpen(true)
                 } else {
@@ -150,8 +149,7 @@ const Menu = ({ setMenuOpen, darkMode, setDarkMode, setUploadOpen }) => {
                         openSignin()
                     )
                 }
-            }}
-             style={{ textDecoration: "none", color: "inherit", width: '100%' }}>
+            }} style={{ textDecoration: "none", color: "inherit", width: '100%' }}>
                 <Elements>
                     <BackupRoundedIcon />
                     <NavText>Upload</NavText>
@@ -175,19 +173,19 @@ const Menu = ({ setMenuOpen, darkMode, setDarkMode, setUploadOpen }) => {
                         </Elements>
                     </>
             }
-            {/* {
-                currentUser ? */}
+            {
+                currentUser ?
                     <Elements onClick={() => logoutUser()}>
                         <ExitToAppRoundedIcon />
                         <NavText>Log Out</NavText>
                     </Elements>
 
-                    {/* : */}
+                    :
                     <Elements onClick={() => dispatch(openSignin())}>
                         <ExitToAppRoundedIcon />
                         <NavText>Log In</NavText>
                     </Elements>
-            {/* } */}
+            }
 
         </MenuContainer >
     )

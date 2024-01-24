@@ -2,16 +2,17 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import colors from "colors";
 import morgan from 'morgan';
 
 //routes
 import authRoutes from './routes/auth.js';
-import castingRoutes from './routes/casting.js';
+import podcastsRoutes from './routes/podcasts.js';
 import userRoutes from './routes/user.js';
+import path from "path";
 
 const app = express();
 dotenv.config();
-// console.log(dotenv)
 
 /** Middlewares */
 app.use(express.json());
@@ -27,13 +28,28 @@ app.use(cors(corsConfig));
 //     response.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 //     next();
 //   });
+// --------------------------deployment------------------------------
+const __dirname = path.resolve();
 
-const port = process.env.PORT || 8700;
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/frontend/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running..");
+  });
+}
+// --------------------------deployment------------------------------
+
+const port = process.env.PORT || 8000;
 
 const connect = () => {
     mongoose.set('strictQuery', true);
     mongoose.connect(process.env.MONGO_URL).then(() => {
-        console.log('MongoDB connected');
+        console.log('MongoDB connected'.magenta);
     }).catch((err) => {
         console.log(err);
     });
@@ -53,10 +69,11 @@ app.use(express.json())
 // }));
 
 app.use("/api/auth", authRoutes)
-app.use("/api/castings", castingRoutes)
+app.use("/api/podcasts", podcastsRoutes)
 app.use("/api/user", userRoutes)
 // app.use("/api/project", projectRoutes)
 // app.use("/api/team", teamRoutes)
+
 
 app.use((err, req, res, next) => {
     const status = err.status || 500;
@@ -69,6 +86,7 @@ app.use((err, req, res, next) => {
 })
 
 app.listen(port, () => {
-    console.log("Connected")
+    console.log(`Connected ${port}`.yellow
+    .bold)
     connect();
 })

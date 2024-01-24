@@ -24,7 +24,7 @@ export const update = async (req, res, next) => {
 export const getUser = async (req, res, next) => {
     try {
         const user = await User.findById(req.user.id).populate({
-            path: "casting",
+            path: "podcasts",
             populate: {
                 path: "creator",
                 select: "name img",

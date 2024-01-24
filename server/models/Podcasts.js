@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
 
-const CastingSchema = new mongoose.Schema({
+const PodcastsSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -29,7 +29,7 @@ const CastingSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        default: "casting",
+        default: "podcast",
     },
     views: {
         type: Number,
@@ -46,4 +46,4 @@ const CastingSchema = new mongoose.Schema({
     }
 );
 
-export default mongoose.model("Casting", CastingSchema);
+export default mongoose.model("Podcasts", PodcastsSchema);

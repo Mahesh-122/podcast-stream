@@ -1,22 +1,22 @@
 import express from "express";
 import { verifyToken } from "../middleware/verifyToken.js";
-import { addView, addepisodes, createCasting, favoritCasting, getByCategory, getByTag, getCastingById, getCastings, random, search, mostpopular } from "../controllers/castings.js";
+import { addView, addepisodes, createPodcast, favoritPodcast, getByCategory, getByTag, getPodcastById, getPodcasts, random, search, mostpopular } from "../controllers/podcasts.js";
 
 
 const router = express.Router();
 
-//create a Casting
-router.post("/",verifyToken, createCasting);
-//get all Castings
-router.get("/", getCastings);
-//get Casting by id
-router.get("/get/:id",getCastingById)
+//create a podcast
+router.post("/",verifyToken, createPodcast);
+//get all podcasts
+router.get("/", getPodcasts);
+//get podcast by id
+router.get("/get/:id",getPodcastById)
 
 //add episode to a 
 router.post("/episode",verifyToken, addepisodes);
 
-//favorit/unfavorit Casting
-router.post("/favorit",verifyToken,favoritCasting); 
+//favorit/unfavorit podcast
+router.post("/favorit",verifyToken,favoritPodcast); 
 
 //add view
 router.post("/addview/:id",addView); 

@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 import { createError } from "../error.js";
-import Castings from "../models/Casting.js";
+import Podcasts from "../models/Podcasts.js";
 import Episodes from "../models/Episodes.js";
 import User from "../models/User.js";
 
 
-export const createCasting = async (req, res, next) => {
+export const createPodcast = async (req, res, next) => {
     try {
         const user = await User.findById(req.user.id);
 
@@ -20,7 +20,7 @@ export const createCasting = async (req, res, next) => {
         }));
 
         // Create a new podcast
-        const podcast = new Castings(
+        const podcast = new Podcasts(
             {
                 creator: user.id, episodes: episodeList,
                 name: req.body.name,
@@ -35,7 +35,7 @@ export const createCasting = async (req, res, next) => {
 
         //save the podcast to the user
         await User.findByIdAndUpdate(user.id, {
-            $push: { Castings: savedPodcast.id },
+            $push: { podcasts: savedPodcast.id },
 
         }, { new: true });
 
@@ -58,7 +58,7 @@ export const addepisodes = async (req, res, next) => {
 
 
             // update the podcast
-            await Castings.findByIdAndUpdate(
+            await Podcasts.findByIdAndUpdate(
                 req.body.podid, {
                 $push: { episodes: savedEpisode.id },
 
@@ -75,30 +75,30 @@ export const addepisodes = async (req, res, next) => {
 
 
 
-export const getCastings = async (req, res, next) => {
+export const getPodcasts = async (req, res, next) => {
     try {
-        // Get all Castings from the database
-        const Castings = await Castings.find().populate("creator", "name img").populate("episodes");
-        return res.status(200).json(Castings);
+        // Get all podcasts from the database
+        const podcasts = await Podcasts.find().populate("creator", "name img").populate("episodes");
+        return res.status(200).json(podcasts);
     } catch (err) {
         next(err);
     }
 };
 
-export const getCastingById = async (req, res, next) => {
+export const getPodcastById = async (req, res, next) => {
     try {
-        // Get the Castings from the database
-        const podcast = await Castings.findById(req.params.id).populate("creator", "name img").populate("episodes");
+        // Get the podcasts from the database
+        const podcast = await Podcasts.findById(req.params.id).populate("creator", "name img").populate("episodes");
         return res.status(200).json(podcast);
     } catch (err) {
         next(err);
     }
 };
 
-export const favoritCasting = async (req, res, next) => {
+export const favoritPodcast = async (req, res, next) => {
     // Check if the user is the creator of the podcast
     const user = await User.findById(req.user.id);
-    const podcast = await Castings.findById(req.body.id);
+    const podcast = await Podcasts.findById(req.body.id);
     let found = false;
     if (user.id === podcast.creator) {
         return next(createError(403, "You can't favorit your own podcast!"));
@@ -133,7 +133,7 @@ export const favoritCasting = async (req, res, next) => {
 
 export const addView = async (req, res, next) => {
     try {
-      await Castings.findByIdAndUpdate(req.params.id, {
+      await Podcasts.findByIdAndUpdate(req.params.id, {
         $inc: { views: 1 },
       });
       res.status(200).json("The view has been increased.");
@@ -147,8 +147,8 @@ export const addView = async (req, res, next) => {
 //searches
 export const random = async (req, res, next) => {
     try {
-        const Castings = await Castings.aggregate([{ $sample: { size: 40 } }]).populate("creator", "name img").populate("episodes");
-        res.status(200).json(Castings);
+        const podcasts = await Podcasts.aggregate([{ $sample: { size: 40 } }]).populate("creator", "name img").populate("episodes");
+        res.status(200).json(podcasts);
     } catch (err) {
         next(err);
     }
@@ -156,7 +156,7 @@ export const random = async (req, res, next) => {
 
 export const mostpopular = async (req, res, next) => {
     try {
-        const podcast = await Castings.find().sort({ views: -1 }).populate("creator", "name img").populate("episodes");
+        const podcast = await Podcasts.find().sort({ views: -1 }).populate("creator", "name img").populate("episodes");
         res.status(200).json(podcast);
     } catch (err) {
         next(err);
@@ -166,7 +166,7 @@ export const mostpopular = async (req, res, next) => {
 export const getByTag = async (req, res, next) => {
     const tags = req.query.tags.split(",");
     try {
-        const podcast = await Castings.find({ tags: { $in: tags } }).populate("creator", "name img").populate("episodes");
+        const podcast = await Podcasts.find({ tags: { $in: tags } }).populate("creator", "name img").populate("episodes");
         res.status(200).json(podcast);
     } catch (err) {
         next(err);
@@ -176,7 +176,7 @@ export const getByTag = async (req, res, next) => {
 export const getByCategory = async (req, res, next) => {
     const query = req.query.q;
     try {
-        const podcast = await Castings.find({ 
+        const podcast = await Podcasts.find({ 
             
         category: { $regex: query, $options: "i" },
         }).populate("creator", "name img").populate("episodes");
@@ -189,7 +189,7 @@ export const getByCategory = async (req, res, next) => {
 export const search = async (req, res, next) => {
     const query = req.query.q;
     try {
-      const podcast = await Castings.find({
+      const podcast = await Podcasts.find({
         name: { $regex: query, $options: "i" },
       }).populate("creator", "name img").populate("episodes").limit(40);
       res.status(200).json(podcast);

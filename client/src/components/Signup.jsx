@@ -371,7 +371,7 @@ const SignUp = ({ setSignUpOpen, setSignInOpen }) => {
                   <CircularProgress color="inherit" size={20} />
                 ) : (
                   <>
-                    <GoogleIcon src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/1000px-Google_%22G%22_Logo.svg.png?20210618182606" />
+                    <GoogleIcon src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/800px-Google_%22G%22_logo.svg.png" />
                     Sign In with Google</>
                 )}
               </OutlinedBox>

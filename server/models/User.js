@@ -25,14 +25,14 @@ const UserSchema = new mongoose.Schema({
         required: true,
         default: false,
     },
-    casting: {
+    podcasts: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: "Casting",
+        ref: "Podcasts",
         default: [],
     },
     favorits: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: "Casting",
+        ref: "Podcasts",
         default: [],
     }
 },
