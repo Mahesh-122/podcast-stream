@@ -2,7 +2,7 @@ import axios from 'axios'
 import jwt_decode from 'jwt-decode'
 //https://podstreaming.onrender.com/api
 // const API = axios.create({ baseURL: `https://podstreaming.onrender.com/api` });
-const API = axios.create({ baseURL: 'http://localhost:8000/api' })
+const API = axios.create({ baseURL: '/api' })
 
 //auth
 export const signIn = async ({ email, password }) =>
