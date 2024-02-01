@@ -1,8 +1,7 @@
 import axios from 'axios'
 import jwt_decode from 'jwt-decode'
-//https://podstreaming.onrender.com/api
 // const API = axios.create({ baseURL: `https://podstreaming.onrender.com/api` });
-const API = axios.create({ baseURL: '/api' })
+const API = axios.create({ baseURL: '/api/' })
 
 //auth
 export const signIn = async ({ email, password }) =>
@@ -47,13 +46,23 @@ export const searchUsers = async (search, token) =>
     )
 
 //podcast api
-export const createPodcast = async (podcast, token) =>
-    await API.post(
-        '/podcasts',
-        podcast,
-        { headers: { Authorization: `Bearer ${token}` } },
-        { withCredentials: true }
-    )
+export const createPodcast = async (podcast, token) => {
+    try {
+        const response = await API.post(
+            '/podcasts',
+            podcast,
+            {
+                headers: { Authorization: `Bearer ${token}` },
+                withCredentials: true,
+                maxContentLength: 1024 * 1024 * 500, // Remove or set a specific value
+            }
+        );
+        return response.data;
+    } catch (error) {
+        console.error("Error creating podcast:", error);
+        throw error;
+    }
+};
 export const getPodcasts = async () => await API.get('/podcasts')
 export const addEpisodes = async (podcast, token) =>
     await API.post(

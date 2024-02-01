@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import bodyParser from "body-parser";
 import colors from "colors";
 import morgan from 'morgan';
 
@@ -68,25 +69,38 @@ app.use(express.json())
 //     }
 // }));
 
+
+
+// Express 4.0
+app.use(bodyParser.json({ limit: '500mb' }));
+app.use(bodyParser.urlencoded({ extended: true, parameterLimit:100000, limit: '500mb' }));
+
+app.use((req, res, next) => {
+  console.log(`Incoming request: ${req.method} ${req.url}`);
+  console.log(`Request body size: ${JSON.stringify(req.body).length} bytes`);
+  next();
+});
+
+
 app.use("/api/auth", authRoutes)
 app.use("/api/podcasts", podcastsRoutes)
 app.use("/api/user", userRoutes)
 // app.use("/api/project", projectRoutes)
 // app.use("/api/team", teamRoutes)
 
-
+// ... error handling middleware
 app.use((err, req, res, next) => {
-    const status = err.status || 500;
-    const message = err.message || "Something went wrong";
-    return res.status(status).json({
-        success: false,
-        status,
-        message
-    })
+  const status = err.status || 500;
+  const message = err.message || "Something went wrong";
+  return res.status(status).json({
+    success: false,
+    status,
+    message
+  })
 })
 
 app.listen(port, () => {
-    console.log(`Connected ${port}`.yellow
-    .bold)
-    connect();
+  console.log(`Connected ${port}`.yellow
+  .bold)
+  connect();
 })
